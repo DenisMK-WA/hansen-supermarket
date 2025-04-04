@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="2.18">
+    <function name="Main" type="None" variable=""> 
+        <parameters/> 
+        <body>
+            <output expression="\"Welcome to Hansen's Discount Supermarket!\"" newline="true"/>
+            <declare name="numItems" type="Integer" array="False" size=""/>
+            <declare name="prices" type="Real" array="True" size="numItems"/>
+            <declare name="total" type="Real" array="False" size=""/>
+            <assign variable="total" expression="0"/>
+            <output expression="\"Enter the number of items you have:\"" newline="false"/>
+            <input variable="numItems"/>
+            <for variable="i" start="0" end="numItems-1" step="1">
+                <declare name="price" type="Real" array="False" size=""/>
+                <do>
+                    <output expression="\"Enter the price of item #\" &amp; (i+1) &amp; \" (between $0.01 and $20.00):\"" newline="false"/>
+                    <input variable="price"/>
+                    <if expression="price &lt;= 0 or price &gt; 20">
+                        <output expression="\"Invalid price. Please enter a value between 0 and 20.\"" newline="true"/>
+                    </if>
+                </doWhile expression="price &lt;= 0 or price &gt; 20"/>
+                <assign variable="prices[i]" expression="price"/>
+                <assign variable="total" expression="total + price"/>
+            </for>
+            <call expression="finalTotal(total)" assignTo="final"/>
+            <output expression="\"Final Total (with tax): $\" &amp; format(final, \"0.00\")" newline="true"/>
+        </body> 
+    </function>
+    <function name="finalTotal" type="Real" variable="">
+        <parameters>
+            <parameter name="totalSales" type="Real"/>
+        </parameters>
+        <body>
+            <declare name="tax" type="Real" array="False" size=""/>
+            <assign variable="tax" expression="totalSales * 0.06"/>
+            <output expression="\"Subtotal: $\" &amp; format(totalSales, \"0.00\")" newline="true"/>
+            <output expression="\"Sales Tax (6%): $\" &amp; format(tax, \"0.00\")" newline="true"/>
+            <return expression="totalSales + tax"/>
+        </body>
+    </function>
+</flowgorithm>
